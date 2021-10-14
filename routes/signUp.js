@@ -8,7 +8,7 @@ const {check, validationResult} = require("express-validator")
 function checkPasswordStrength(password, email){
     const userName = email.split('@')[0]
     const passwordHasUsername = password.includes(userName)
-    const passwordFollowsPattern = false
+    const passwordFollowsPattern = true
     return passwordHasUsername && passwordFollowsPattern
 }
 
@@ -34,7 +34,7 @@ router.post("/", [
                 if(checkPasswordStrength(password,email) === false){
                     throw new Error("Password not strong enough")
                 }
-                
+
                 const salt = await bcrypt.genSalt(10)
                 
                 password = await bcrypt.hash(password, salt)
