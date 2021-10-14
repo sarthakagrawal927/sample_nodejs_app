@@ -6,11 +6,11 @@ router.post("/",
         async(req,res)=>{
             try{
                 await User.deleteMany()
-                res.status(201).json({"Success": true})
+                res.status(200).json({"success": true})
             }
             catch(err){
                 console.log(err.message)
-                res.status(400).json({"Success" : false})
+                res.status(400).json({"success" : false})
             }
         }
 )

@@ -16,23 +16,22 @@ router.post("/", [
                     throw new Error(errors.array()[0]);
                 }
 
+                let {email, password} = req.body;
                 const user = await User.findOne({ email })
                 if(!user){
                     throw new Error("User does not exists")
                 }
 
-                let {email, password} = req.body;
-
-                const isMatch = await bcrypt.compare(password, userpassword)
+                const isMatch = await bcrypt.compare(password, user.password)
                 if(!isMatch){
                     throw new Error("Password incorrect")
                 }
 
-                res.status(200).json({"Success": true})
+                res.status(200).json({"success": true})
             }
             catch(err){
                 console.log(err.message)
-                res.status(400).json({"Success" : false})
+                res.status(400).json({"success" : false})
             }
         }
 )
