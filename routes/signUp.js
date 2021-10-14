@@ -3,17 +3,7 @@ const router = express.Router()
 const bcrypt = require("bcrypt")
 const User = require("./../models/User")
 const {check, validationResult} = require("express-validator")
-
-
-function checkPasswordStrength(password, email){
-    const userName = email.split('@')[0]
-    const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-    const passwordHasUsername = password.includes(userName)
-    const passwordFollowsPattern = strongRegex.test(password)
-    console.log(password,email,!passwordHasUsername,passwordFollowsPattern)
-    return !passwordHasUsername && passwordFollowsPattern
-}
-
+const checkPasswordStrength = require("./../utils/checkPasswordStrength")
 
 router.post("/", [
                     check("name","Valid name is required").not().isEmpty(), 
